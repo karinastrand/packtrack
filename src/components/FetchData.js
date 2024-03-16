@@ -1,5 +1,10 @@
 import React, {useState,useEffect} from 'react'
-import DisplayData from './DisplayData';
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
+
 export default function FetchData() 
 { 
     const [data,setData]=useState(null);
@@ -21,36 +26,38 @@ export default function FetchData()
      
     if(loading) return <p>Loading...</p>;
     if(error) return <p>{error.message}</p>
-   // const fetcheddata=JSON.stringify(data);
-   function fetcheddata(value)
-   {
-        return(
-            <div>
-                <DisplayData
-                    id={value.id}
-                    status={value.status}
-                    eta={value.eta}
-                    parcelid={value.parcel_id}
-                    sender={value.sender}
-                    verificationrequired={value.verification_required}
-                    locationid={value.location_id}
-                    locationname={value.location_name}
-                    locationcoordlat={value.location_coordination_latitude}
-                    locationcoordmagn={value.location_coordination_magnitude}
-                    locationstatusok={value.location_status_ok}
-                    userphone={value.user_phone}
-                    username={value.user_name}
-                    notes={value.notes}
-                    lastupdated={value.last_updated}
-
-                />
-            </div>
-        )
-   }
+  
     return (
-        <div>
-            {data.map(fetcheddata)}<br/>
-            <h2>from file</h2>
-        </div>
+    
+     <div>
+        <Container className='bg-primary text-white'>
+        <h1>Welcome to packtrack</h1>
+            <Row>
+     {data.map(data=>
+     (
+        <Col md="3" className='g-4'>
+            <Card className='bg-info text-white'>
+                <Card.Body>
+                <Card.Title>
+                    {data.sender}<br/>
+                    # {data.parcel_id}
+                </Card.Title>
+                <Card.Text>
+                    {data.status}
+                </Card.Text>
+                
+                <Button variant="light">View details</Button>
+             
+                </Card.Body>
+            </Card>
+        </Col>
+     ))
+     
+     }
+     </Row>
+     <br/>
+     <br/>
+     </Container>
+     </div>   
     );
 }
